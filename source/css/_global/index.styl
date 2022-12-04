@@ -35,7 +35,7 @@
   --scrollbar-color: $scrollbar-color
 
 body
-  position: relative
+  position: hexo-config('preloader.enable') && hexo-config('preloader.source') != 2 ? fixed : relative
   min-height: 100%
   background: var(--global-bg)
   color: var(--font-color)
