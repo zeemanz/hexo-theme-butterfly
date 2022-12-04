@@ -1,0 +1,25 @@
+name: Fork auto synchronizing
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 6,18 * * *
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout HEAD
+        uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: Set git configs
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Add remote URL of upstream
+        run: git remote add upstream https://github.com/jerryc127/hexo-theme-butterfly.git
+      - name: Merge updates from upstream
+        run: |
+          git fetch upstream
+          git merge upstream/master
+      - name: Push updates
+        run: git push
